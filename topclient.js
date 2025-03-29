@@ -1,12 +1,10 @@
-// 简化版的淘宝客SDK，专为Cloudflare Worker环境优化
+// 简化版的淘宝客SDK，适用于普通Node.js环境
+import crypto from 'crypto';
+import fetch from 'node-fetch'; // 需要安装: npm install node-fetch
 
-// MD5哈希函数 (使用Web Crypto API)
-async function md5(message) {
-    const msgUint8 = new TextEncoder().encode(message);
-    const hashBuffer = await crypto.subtle.digest('MD5', msgUint8);
-    const hashArray = Array.from(new Uint8Array(hashBuffer));
-    const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
-    return hashHex;
+// MD5哈希函数 (使用Node.js crypto模块)
+function md5(message) {
+    return crypto.createHash('md5').update(message).digest('hex');
 }
   
 // 创建淘宝客API客户端
@@ -166,6 +164,5 @@ async function generateSign(params, appsecret) {
     console.log('Signing string:', signStr);
     
     // 计算MD5并转为大写（淘宝API要求）
-    const md5Hash = await md5(signStr);
-    return md5Hash.toUpperCase();
+    return md5(signStr).toUpperCase();
 } 

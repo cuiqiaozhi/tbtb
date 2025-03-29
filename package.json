@@ -1,0 +1,22 @@
+{
+  "name": "taobao-coupon-app",
+  "version": "1.0.0",
+  "description": "淘宝优惠券推广应用，支持在任何JavaScript环境下运行",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  },
+  "dependencies": {
+    "node-fetch": "^3.3.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "author": "",
+  "license": "ISC"
+} 
