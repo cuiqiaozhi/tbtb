@@ -1,4 +1,4 @@
-// 简化版的淘宝客SDK，适用于普通Node.js环境
+// 简化版的淘宝客SDK，适用于普通Node.js环境和Vercel
 import crypto from 'crypto';
 import fetch from 'node-fetch'; // 需要安装: npm install node-fetch
 

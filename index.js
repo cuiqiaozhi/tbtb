@@ -32,8 +32,8 @@ const env = {
     PORT: process.env.PORT || 3000
 };
 
-// 创建Node.js HTTP服务器
-const server = http.createServer(async (req, res) => {
+// 处理请求的主函数，可用于Vercel或HTTP服务器
+async function handleRequest(req, res) {
     // 处理 CORS
     Object.entries(corsHeaders).forEach(([key, value]) => {
         res.setHeader(key, value);
@@ -184,12 +184,23 @@ const server = http.createServer(async (req, res) => {
             }
         }));
     }
-});
+}
 
-// 启动服务器
-server.listen(env.PORT, () => {
-    console.log(`Server running at http://localhost:${env.PORT}/`);
-});
+// 检测环境：如果在本地运行，则启动HTTP服务器
+if (process.env.NODE_ENV !== 'production') {
+    // 创建Node.js HTTP服务器（本地开发环境）
+    const server = http.createServer(handleRequest);
+
+    // 启动服务器
+    server.listen(env.PORT, () => {
+        console.log(`Server running at http://localhost:${env.PORT}/`);
+    });
+}
+
+// 导出处理函数供Vercel使用
+export default async function (req, res) {
+    return handleRequest(req, res);
+}
 
 // 搜索商品并获取优惠券信息
 async function searchItems(client, keyword, page = 1, adzoneId) {
